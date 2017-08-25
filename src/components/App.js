@@ -26,7 +26,7 @@ class App extends Component {
   // Enter your code below:
 
   handleNameChange(event) {
-    this.setState({pilot: event.target.value});
+    this.setState({value: event.target.value});
   };
 
 
@@ -39,8 +39,10 @@ class App extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.setState({pilotDisplay: this.state.pilot});
-    this.setState({pilot: this.state.value});
+    this.setState({
+      pilot: this.state.value,
+      value: ''
+    });
   };
 
   // LIFECYCLE
@@ -119,10 +121,10 @@ class App extends Component {
          <div className="card col-sm-4 text-center myForm">
            <form className="card-block" onSubmit={this.handleSubmit}>
              <h3>What is your name, pilot?</h3>
-             <input className="form-control" onChange={this.handleNameChange} name="name" type="text" value={this.state.pilot} placeholder="Enter your name" /><br />
+             <input className="form-control" onChange={this.handleNameChange} name="name" type="text" value={this.state.value} placeholder="Enter your name" /><br />
              <button className="btn btn-primary" type="submit">Submit</button>
            </form>
-           <h3>{this.state.pilotDisplay}</h3>
+           <h3>{this.state.pilot}</h3>
          </div>
 
          <div className="row">
