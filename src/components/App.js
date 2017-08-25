@@ -26,8 +26,8 @@ class App extends Component {
   // Enter your code below:
 
   handleNameChange(event) {
-    this.setState({});
-  }
+    this.setState({pilot: event.target.value});
+  };
 
 
   //  FORM: SUBMIT METHOD
@@ -39,8 +39,9 @@ class App extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.setState({pilot: event.target.value});
-  }
+    this.setState({pilotDisplay: this.state.pilot});
+    this.setState({pilot: this.state.value});
+  };
 
   // LIFECYCLE
   // Which lifecycle is best for fetching data?
@@ -57,11 +58,12 @@ class App extends Component {
       if(response.status !== 200) {
         console.log(response.status)
       };
-      response.json();
+      return response.json();
     })
 
     .then((data) => {
-      console.log(data.results)
+      console.log(data.results);
+      this.setState({vehicles: data.results});
     });
   }
 
@@ -78,6 +80,28 @@ class App extends Component {
     Store vehicles state in a variable.
     Map over this variable to access the values needed to render.
     */
+    let SWV = this.state.vehicles.map((vehicle) => {
+      return (
+        <div className="col-sm-4" key={vehicle.name}>
+        <div className="card">
+          <div className="card-block">
+            <h3 className="card-title">{vehicle.name}</h3>
+            <h4 className="card-subtitle mb-2 text-muted">{vehicle.model}</h4>
+            <ul className="list-group list-group-flush card-block">
+              <h4 className="card-subtitle mb-2 text-muted">Specs</h4>
+              <li className="list-group-item">Manufacturer: {vehicle.manufacturer}</li>
+              <li className="list-group-item">Class: {vehicle.vehicle_class}</li>
+              <li className="list-group-item">Passengers: {vehicle.passengers}</li>
+              <li className="list-group-item">Crew: {vehicle.crew}</li>
+              <li className="list-group-item">Length: {vehicle.length}</li>
+              <li className="list-group-item">Max-Speed: {vehicle.max_atmosphering_speed}</li>
+              <li className="list-group-item">Cargo Capacity: {vehicle.cargo_capacity}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      );
     })
     return (
       <div className="App">
@@ -86,6 +110,24 @@ class App extends Component {
          jumbotron section, form section, vehicle cards section.
          Your form will also need a header in which you will pass the state of the form upon submit.
          */}
+         <div className="jumbotron">
+           <h1 className="display-3">Star Wars</h1>
+           <hr className="my-4" />
+             <p className="lead">The Vehicles of Star Wars</p>
+         </div>
+
+         <div className="card col-sm-4 text-center myForm">
+           <form className="card-block" onSubmit={this.handleSubmit}>
+             <h3>What is your name, pilot?</h3>
+             <input className="form-control" onChange={this.handleNameChange} name="name" type="text" value={this.state.pilot} placeholder="Enter your name" /><br />
+             <button className="btn btn-primary" type="submit">Submit</button>
+           </form>
+           <h3>{this.state.pilotDisplay}</h3>
+         </div>
+
+         <div className="row">
+           {SWV}
+         </div>
       </div>
     );
   }

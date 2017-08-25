@@ -1,5 +1,5 @@
 .App {
-  margin: 10px;
+  margin: 10px 10%;
 }
 
 .card{
@@ -8,4 +8,9 @@
 
 .form{
   text-align: center;
+}
+
+.myForm {
+  display: block;
+  margin: 0 auto 2.5%;
 }
